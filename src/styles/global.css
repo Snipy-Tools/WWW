@@ -1,20 +1,26 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("/fonts/inter-latin.woff2") format("woff2");
+}
+
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Space Grotesk", "Inter", sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, monospace;
-  --color-bg: #06080b;
-  --color-surface: #0d1117;
-  --color-line: rgb(255 255 255 / 0.08);
+  --font-mono: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --color-bg: #111315;
+  --color-surface: #181b1e;
+  --color-line: #2a2e33;
   --color-mint: #3dd6b0;
-  --color-muted: #8b95a1;
+  --color-muted: #9aa3ab;
 }
 
 html {
-  scroll-behavior: smooth;
   background: var(--color-bg);
-  color: #e8edf2;
+  color: #e8eaec;
 }
 
 body {
@@ -26,46 +32,100 @@ body {
   background: rgb(61 214 176 / 0.35);
 }
 
-.gradient-text {
-  background: linear-gradient(180deg, #fff 30%, rgb(255 255 255 / 0.55));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.mint-text {
-  background: linear-gradient(90deg, #3dd6b0, #8af0d6);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
 .card {
-  background: linear-gradient(180deg, rgb(255 255 255 / 0.04), rgb(255 255 255 / 0.01));
+  background: var(--color-surface);
   border: 1px solid var(--color-line);
-  border-radius: 1.25rem;
+  border-radius: 0.5rem;
 }
 
-.grid-bg {
-  background-image:
-    linear-gradient(var(--color-line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--color-line) 1px, transparent 1px);
-  background-size: 64px 64px;
-  mask-image: radial-gradient(ellipse at 50% 0%, #000 20%, transparent 70%);
+/* Scroll reveals (only hidden when JS is running) */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+  transition-delay: var(--d, 0ms);
+}
+.js .reveal.from-left { transform: translateX(-36px); }
+.js .reveal.pop { transform: scale(0.85) rotate(-2deg); }
+.js .reveal.is-visible {
+  opacity: 1;
+  transform: none;
 }
 
-@keyframes float {
-  50% {
-    transform: translateY(-10px);
+/* Hero entrance */
+@keyframes bounce-in {
+  0% { opacity: 0; transform: translateY(-40px) rotate(-12deg) scale(0.8); }
+  60% { opacity: 1; transform: translateY(6px) rotate(4deg) scale(1.03); }
+  100% { opacity: 1; transform: none; }
+}
+.mascot {
+  animation: bounce-in 0.9s cubic-bezier(0.3, 0.8, 0.3, 1) backwards;
+  transition: transform 0.3s cubic-bezier(0.3, 1.8, 0.5, 1);
+  cursor: pointer;
+}
+.mascot:hover { transform: rotate(-10deg) scale(1.12); }
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: none; }
+}
+.rise {
+  animation: rise 0.7s cubic-bezier(0.2, 0.9, 0.3, 1) both;
+  animation-delay: var(--d, 0ms);
+}
+
+/* Marker highlight that sweeps in, like selecting text */
+.hl {
+  background: linear-gradient(var(--color-mint), var(--color-mint)) no-repeat 0 100% / 0% 100%;
+  color: #000;
+  padding: 0 0.15em;
+  animation: hl-sweep 0.8s 0.9s ease-out forwards;
+}
+@keyframes hl-sweep { to { background-size: 100% 100%; } }
+
+/* Playful hovers */
+.lift { transition: transform 0.25s cubic-bezier(0.3, 1.6, 0.5, 1), border-color 0.2s; }
+.lift:hover,
+.js .lift.is-visible:hover { transform: translateY(-3px) rotate(-0.4deg); }
+.btn { transition: transform 0.2s cubic-bezier(0.3, 1.8, 0.5, 1), background-color 0.2s; }
+.btn:hover { transform: scale(1.06) rotate(-1.5deg); }
+.btn:active { transform: scale(0.96); }
+
+/* Scroll-linked effects (progressive enhancement) */
+@supports (animation-timeline: scroll()) {
+  .progress {
+    position: fixed;
+    inset: 0 0 auto 0;
+    height: 3px;
+    z-index: 60;
+    background: var(--color-mint);
+    transform-origin: 0 50%;
+    animation: grow linear both;
+    animation-timeline: scroll(root);
   }
-}
+  @keyframes grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 
-.float {
-  animation: float 5s ease-in-out infinite;
+  .parallax-video {
+    animation: video-in linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 40%;
+  }
+  @keyframes video-in {
+    from { transform: scale(0.88) rotate(-1.5deg); opacity: 0.4; }
+    to { transform: none; opacity: 1; }
+  }
+
+  .spin-on-scroll {
+    animation: spin linear both;
+    animation-timeline: view();
+    animation-range: entry 0% exit 100%;
+  }
+  @keyframes spin { from { transform: rotate(-25deg); } to { transform: rotate(25deg); } }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .float {
-    animation: none;
-  }
+  .js .reveal { opacity: 1; transform: none; transition: none; }
+  .mascot, .rise, .progress, .parallax-video, .spin-on-scroll { animation: none; }
+  .hl { animation: none; background-size: 100% 100%; }
+  .lift:hover, .js .lift.is-visible:hover, .btn:hover, .mascot:hover { transform: none; }
 }

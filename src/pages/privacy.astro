@@ -1,0 +1,54 @@
+---
+import Layout from '../layout/layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Privacy — Snipy">
+	<Nav />
+	<main class="mx-auto max-w-3xl px-6 pb-16 pt-32">
+		<h1 class="text-3xl font-semibold tracking-tight">Privacy policy</h1>
+
+		<h2 class="mt-10 text-lg font-semibold">Controller</h2>
+		<p class="mt-2 text-muted">
+			The controller under the Swiss Federal Act on Data Protection (FADP) is the provider named in the <a href="/impressum" class="underline underline-offset-4 hover:text-white">Impressum</a>.
+		</p>
+
+		<h2 class="mt-10 text-lg font-semibold">This website</h2>
+		<p class="mt-2 text-muted">
+			This site does not use cookies, analytics, tracking, advertising or contact forms. Fonts and the promo video
+			are served from this site itself, not from third parties.
+		</p>
+
+		<h2 class="mt-10 text-lg font-semibold">Hosting and server logs</h2>
+		<p class="mt-2 text-muted">
+			The site is hosted by Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, USA, so your data is
+			processed in the USA and other countries where Vercel operates. When you open a page, the server processes
+			your IP address, the time of the request, the requested file and the browser's user agent. This is
+			technically necessary to deliver the site and keep it secure (legitimate interest). Vercel handles this data
+			under its own <a href="https://vercel.com/legal/privacy-policy" class="underline underline-offset-4 hover:text-white">privacy policy</a>.
+		</p>
+
+		<h2 class="mt-10 text-lg font-semibold">Download via GitHub</h2>
+		<p class="mt-2 text-muted">
+			The Download buttons link to GitHub (GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107,
+			USA). If you click one, you leave this site and GitHub processes your data under its own
+			<a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" class="underline underline-offset-4 hover:text-white">privacy statement</a>.
+			Nothing is sent to GitHub until you click.
+		</p>
+
+		<h2 class="mt-10 text-lg font-semibold">The Snipy app</h2>
+		<p class="mt-2 text-muted">
+			Snipy works entirely on your device. It copies the text you select to your local clipboard and does not
+			send it, or any other data, over the network. The app has no telemetry, accounts or analytics.
+		</p>
+
+		<h2 class="mt-10 text-lg font-semibold">Your rights</h2>
+		<p class="mt-2 text-muted">
+			Under the FADP you can ask what data is held about you, and have it corrected or deleted. You can also
+			complain to the Federal Data Protection and Information Commissioner (FDPIC). If you visit from the EU,
+			the rights under the GDPR apply as well. Contact: see the Impressum.
+		</p>
+	</main>
+	<Footer />
+</Layout>

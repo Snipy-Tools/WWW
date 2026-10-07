@@ -2,11 +2,9 @@
 import DownloadButton from './DownloadButton.astro';
 ---
 
-<section class="px-6 py-24">
-	<div class="card relative mx-auto max-w-5xl overflow-hidden px-6 py-20 text-center">
-		<div class="pointer-events-none absolute left-1/2 top-full h-72 w-150 -translate-x-1/2 -translate-y-1/2 rounded-full bg-mint/25 blur-[100px]"></div>
-		<img src="/snipy.svg" alt="" width="64" height="60" class="relative mx-auto mb-6" />
-		<h2 class="gradient-text relative font-display text-4xl font-bold md:text-5xl">Stop pressing Ctrl+C.</h2>
-		<div class="relative mt-8"><DownloadButton /></div>
+<section class="px-6 py-16">
+	<div class="mx-auto max-w-3xl border-t border-line pt-12">
+		<h2 class="reveal pop text-2xl font-semibold tracking-tight">Stop pressing Ctrl+C.</h2>
+		<div style="--d:150ms" class="reveal mt-6"><DownloadButton /></div>
 	</div>
 </section>

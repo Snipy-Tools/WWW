@@ -1,44 +1,21 @@
 ---
-const small = [
+const items = [
+	{ title: 'Drag or double-click', text: 'Pick your trigger: drag, double-click, or both. The text is on your clipboard before you let go.' },
+	{ title: 'Works in every app', text: 'If you can select it, Snipy copies it.' },
 	{ title: 'Lives in your tray', text: 'Always on, never in the way.' },
 	{ title: 'One switch', text: 'Toggle auto-copy on or off from the tray panel.' },
 	{ title: 'Your minimum', text: 'Ignore accidental selections: 1, 2, 3 or 5 characters.' },
 ];
-const apps = ['Browser', 'Editor', 'Chat', 'Terminal'];
 ---
 
-<section id="features" class="mx-auto max-w-6xl px-6 py-24">
-	<div class="mx-auto mb-16 max-w-2xl text-center">
-		<h2 class="gradient-text font-display text-4xl font-bold tracking-tight md:text-5xl">Copy at the speed of thought.</h2>
-		<p class="mt-4 text-muted">Small, quiet, and fast. Snipy does one thing and does it right.</p>
-	</div>
-
-	<div class="grid gap-4 md:grid-cols-3">
-		<div class="card relative overflow-hidden p-8 md:col-span-2">
-			<h3 class="font-display text-2xl font-bold">Drag or double-click.</h3>
-			<p class="mt-2 max-w-sm text-muted">Pick your trigger: drag, double-click, or both. The text is on your clipboard before you let go.</p>
-			<div class="mt-8 rounded-xl border border-line bg-surface p-5 font-mono text-sm">
-				<p class="text-muted"># Release notes</p>
-				<p class="mt-2">server: <span class="rounded bg-mint/30 px-1 text-white">10.0.4.21:8080</span></p>
-				<p class="mt-2 text-muted">ticket SNP-2048 is fixed</p>
-			</div>
-		</div>
-
-		<div class="card relative overflow-hidden p-8">
-			<h3 class="font-display text-2xl font-bold">Works in every app.</h3>
-			<p class="mt-2 text-muted">If you can select it, Snipy copies it.</p>
-			<div class="mt-8 grid grid-cols-2 gap-2 font-mono text-[10px] text-muted">
-				{apps.map((app) => (
-					<div class="rounded-lg border border-line bg-surface px-3 py-4">{app}</div>
-				))}
-			</div>
-		</div>
-
-		{small.map((f) => (
-			<div class="card p-8">
-				<h3 class="font-display text-xl font-bold">{f.title}</h3>
-				<p class="mt-2 text-sm text-muted">{f.text}</p>
+<section id="features" class="mx-auto max-w-3xl px-6 py-16">
+	<h2 class="reveal text-2xl font-semibold tracking-tight">Features</h2>
+	<dl class="mt-8 divide-y divide-line border-y border-line">
+		{items.map((f, i) => (
+			<div style={`--d:${i * 70}ms`} class="reveal from-left lift grid gap-1 py-5 md:grid-cols-[14rem_1fr] md:gap-8">
+				<dt class="font-medium">{f.title}</dt>
+				<dd class="text-muted">{f.text}</dd>
 			</div>
 		))}
-	</div>
+	</dl>
 </section>

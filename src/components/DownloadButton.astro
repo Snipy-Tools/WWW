@@ -9,12 +9,9 @@ const { class: className = '', label = 'Download for Windows' } = Astro.props;
 <a
 	href="https://github.com/Snipy-Tools/Snipy/releases/latest/download/snipy-Windows.exe"
 	class:list={[
-		'inline-flex items-center gap-2 rounded-full bg-mint px-6 py-3 text-sm font-semibold text-black transition hover:bg-white hover:shadow-[0_0_40px_rgb(61_214_176/0.5)]',
+		'btn inline-flex items-center gap-2 rounded-md bg-mint px-5 py-2.5 text-sm font-medium text-black hover:bg-white',
 		className,
 	]}
 >
-	<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-		<path d="M3 5.5 10.5 4.4v7.1H3V5.5Zm8.5-1.2L21 3v8.5h-9.5V4.3ZM3 12.5h7.5v7.1L3 18.5v-6Zm8.5 0H21V21l-9.5-1.3v-7.2Z" />
-	</svg>
 	{label}
 </a>

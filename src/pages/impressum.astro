@@ -1,0 +1,31 @@
+---
+import Layout from '../layout/layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Impressum — Snipy">
+	<Nav />
+	<main class="mx-auto max-w-3xl px-6 pb-16 pt-32">
+		<h1 class="text-3xl font-semibold tracking-tight">Impressum</h1>
+		<p class="mt-2 text-muted">Legal notice (Switzerland)</p>
+
+		<h2 class="mt-10 text-lg font-semibold">Provider</h2>
+		<p class="mt-2 text-muted">
+			Raffael Elias Maier<br />
+			Switzerland
+		</p>
+
+		<h2 class="mt-10 text-lg font-semibold">Contact</h2>
+		<p class="mt-2 text-muted">
+			Email: <a href="mailto:contact@raffaelmaier.com" class="underline underline-offset-4 hover:text-white">contact@raffaelmaier.com</a>
+		</p>
+
+		<h2 class="mt-10 text-lg font-semibold">Liability for external links</h2>
+		<p class="mt-2 text-muted">
+			This site links to GitHub, where the Snipy installer is hosted. I have no influence on the content of linked
+			sites and am not responsible for it.
+		</p>
+	</main>
+	<Footer />
+</Layout>
