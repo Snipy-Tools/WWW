@@ -1,0 +1,24 @@
+---
+import DownloadButton from './DownloadButton.astro';
+
+const links = [
+	{ href: '#features', label: 'Features' },
+	{ href: '#how', label: 'How it works' },
+	{ href: '#faq', label: 'FAQ' },
+];
+---
+
+<header class="fixed inset-x-0 top-0 z-50 border-b border-line bg-bg/70 backdrop-blur-xl">
+	<nav class="mx-auto flex h-14 max-w-6xl items-center justify-between px-6">
+		<a href="/" class="flex items-center gap-2 font-display text-lg font-bold">
+			<img src="/snipy.svg" alt="" width="24" height="22" />
+			Snipy
+		</a>
+		<ul class="hidden items-center gap-8 text-sm text-muted md:flex">
+			{links.map((l) => (
+				<li><a href={l.href} class="transition hover:text-white">{l.label}</a></li>
+			))}
+		</ul>
+		<DownloadButton label="Download" class="!px-4 !py-1.5 !text-xs" />
+	</nav>
+</header>

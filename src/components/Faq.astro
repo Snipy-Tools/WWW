@@ -1,0 +1,23 @@
+---
+const items = [
+	{ q: 'Which platforms does Snipy support?', a: 'Windows for now.' },
+	{ q: 'Can I turn it off?', a: 'Yes. Use the switch in the tray panel whenever you want to pause auto-copy.' },
+	{ q: 'Will it copy accidental selections?', a: 'You can set a minimum length of 1, 2, 3 or 5 characters to ignore short selections.' },
+	{ q: 'Can I choose how it triggers?', a: 'Yes: drag, double-click, or both.' },
+];
+---
+
+<section id="faq" class="mx-auto max-w-3xl px-6 py-24">
+	<h2 class="gradient-text mb-12 text-center font-display text-4xl font-bold tracking-tight">Questions</h2>
+	<div class="space-y-3">
+		{items.map((i) => (
+			<details class="card group px-6 py-5">
+				<summary class="flex cursor-pointer list-none items-center justify-between font-medium">
+					{i.q}
+					<span class="text-mint transition group-open:rotate-45">+</span>
+				</summary>
+				<p class="mt-3 text-muted">{i.a}</p>
+			</details>
+		))}
+	</div>
+</section>
