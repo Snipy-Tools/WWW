@@ -83,6 +83,85 @@ body {
 }
 @keyframes hl-sweep { to { background-size: 100% 100%; } }
 
+/* Hero geometric beams: big, soft diagonal slabs with a mysterious glow */
+.hero-shapes {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  -webkit-mask-image: radial-gradient(ellipse 100% 100% at 50% 40%, #000 40%, transparent 95%);
+  mask-image: radial-gradient(ellipse 100% 100% at 50% 40%, #000 40%, transparent 95%);
+}
+.hero-shapes i {
+  position: absolute;
+  top: -60%;
+  left: calc(10% + var(--x) * 1%);
+  width: var(--w);
+  height: 220%;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgb(61 214 176 / var(--a)) 15%, rgb(61 214 176 / calc(var(--a) * 0.6)) 60%, rgb(61 214 176 / 0) 100%);
+  filter: blur(var(--b));
+  transform: rotate(-38deg);
+  transform-origin: top center;
+  animation: beam-drift 11s ease-in-out infinite alternate;
+  animation-delay: var(--t);
+}
+.hero-shapes i:nth-child(1) { --x: 0;  --w: 22rem; --a: 0.4;  --b: 16px; --t: 0s; }
+.hero-shapes i:nth-child(2) { --x: 22; --w: 8rem;  --a: 0.6;  --b: 4px;  --t: -3s; }
+.hero-shapes i:nth-child(3) { --x: 36; --w: 28rem; --a: 0.22; --b: 28px; --t: -5s; }
+.hero-shapes i:nth-child(4) { --x: 62; --w: 3rem;  --a: 0.75; --b: 1px;  --t: -7s; }
+.hero-shapes i:nth-child(5) { --x: 74; --w: 16rem; --a: 0.32; --b: 20px; --t: -9s; }
+@keyframes beam-drift {
+  from { transform: rotate(-38deg) translateY(0); }
+  to { transform: rotate(-33deg) translateY(4rem); }
+}
+
+/* Scroll hint */
+.scroll-hint {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  margin-left: -10px;
+  color: var(--color-muted);
+  animation: hint-bob 1.6s ease-in-out infinite;
+}
+.scroll-hint:hover { color: #fff; }
+@keyframes hint-bob {
+  0%, 100% { transform: translateY(0); opacity: 0.5; }
+  50% { transform: translateY(8px); opacity: 1; }
+}
+
+/* Hero Snipy: breathes, blinks and the eyes follow the cursor */
+.runner { width: 128px; height: 120px; }
+.snipy { display: block; overflow: visible; transform-origin: 50% 100%; animation: idle 4s ease-in-out infinite; }
+#snipy-eyes { transition: transform 0.12s ease-out; }
+.snipy .eyes-open { transform-box: fill-box; transform-origin: center; transition: transform 0.05s; }
+.snipy .eyes-open.blink { transform: scaleY(0.1); }
+.snipy .eyes-happy, .snipy .eyes-closed, .snipy .smile, .snipy .zzz { display: none; }
+.snipy.happy .eyes-open, .snipy.asleep .eyes-open { display: none; }
+.snipy.happy .eyes-happy, .snipy.happy .smile, .snipy.asleep .eyes-closed { display: block; }
+.snipy.happy { animation: happy-hop 0.45s ease-in-out 3; }
+.snipy.asleep { animation: sleep-breathe 4s ease-in-out infinite; }
+.snipy.asleep .zzz { display: block; animation: zzz-float 3s ease-in-out infinite; }
+@keyframes happy-hop {
+  0%, 100% { transform: translateY(0) scale(1.04, 0.94); }
+  50% { transform: translateY(-14px) scale(0.97, 1.05); }
+}
+@keyframes sleep-breathe {
+  0%, 100% { transform: scale(1, 1); }
+  50% { transform: scale(1.015, 0.97); }
+}
+@keyframes zzz-float {
+  0% { opacity: 0; transform: translate(0, 12px); }
+  30%, 70% { opacity: 1; }
+  100% { opacity: 0; transform: translate(8px, -14px); }
+}
+@keyframes idle {
+  0%, 100% { transform: scale(1, 1); }
+  25% { transform: scale(1.03, 0.96); }
+  50% { transform: scale(0.99, 1.02) translateY(-2px); }
+}
+
 /* Playful hovers */
 .lift { transition: transform 0.25s cubic-bezier(0.3, 1.6, 0.5, 1), border-color 0.2s; }
 .lift:hover,
@@ -125,7 +204,7 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   .js .reveal { opacity: 1; transform: none; transition: none; }
-  .mascot, .rise, .progress, .parallax-video, .spin-on-scroll { animation: none; }
+  .mascot, .rise, .progress, .parallax-video, .spin-on-scroll, .hero-shapes i, .scroll-hint, .snipy { animation: none; }
   .hl { animation: none; background-size: 100% 100%; }
   .lift:hover, .js .lift.is-visible:hover, .btn:hover, .mascot:hover { transform: none; }
 }

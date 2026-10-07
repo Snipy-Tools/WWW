@@ -2,9 +2,10 @@
 import DownloadButton from './DownloadButton.astro';
 ---
 
-<section class="px-6 pb-20 pt-36">
-	<div class="mx-auto max-w-3xl">
-		<img src="/snipy.svg" alt="Snipy mascot" width="72" height="68" class="mascot mb-8" />
+<section class="relative flex min-h-svh items-center overflow-hidden px-6 pb-20 pt-28">
+	<div class="hero-shapes" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+	<div class="relative mx-auto w-full max-w-3xl">
+		<div class="runner mb-8"><svg id="snipy" class="snipy" viewBox="0 0 320 300" width="128" height="120" shape-rendering="crispEdges" role="img" aria-label="Snipy mascot"><g fill="#3DD6B0"><rect x="40" y="140" width="240" height="100"/><rect x="50" y="240" width="30" height="40"/><rect x="100" y="240" width="30" height="40"/><rect x="190" y="240" width="30" height="40"/><rect x="240" y="240" width="30" height="40"/><rect x="80" y="110" width="50" height="30"/><rect x="60" y="80" width="50" height="30"/><rect x="40" y="50" width="50" height="30"/><rect x="30" y="30" width="30" height="20"/><rect x="190" y="110" width="50" height="30"/><rect x="210" y="80" width="50" height="30"/><rect x="230" y="50" width="50" height="30"/><rect x="260" y="30" width="30" height="20"/></g><g id="snipy-eyes"><g class="eyes eyes-open" fill="#000"><rect x="80" y="160" width="40" height="40"/><rect x="200" y="160" width="40" height="40"/></g><g class="eyes-happy" fill="#000"><rect x="80" y="185" width="10" height="15"/><rect x="90" y="175" width="20" height="10"/><rect x="110" y="185" width="10" height="15"/><rect x="200" y="185" width="10" height="15"/><rect x="210" y="175" width="20" height="10"/><rect x="230" y="185" width="10" height="15"/></g><g class="eyes-closed" fill="#000"><rect x="80" y="190" width="40" height="10"/><rect x="200" y="190" width="40" height="10"/></g></g><g class="smile" fill="#000"><rect x="135" y="210" width="10" height="10"/><rect x="145" y="220" width="30" height="10"/><rect x="175" y="210" width="10" height="10"/></g><g class="zzz" fill="#fff" font-family="ui-monospace, Consolas, monospace" font-weight="700"><text x="270" y="40" font-size="30">Z</text><text x="295" y="10" font-size="22">Z</text></g></svg></div>
 		<h1 style="--d:150ms" class="rise text-4xl font-semibold tracking-tight md:text-5xl">Highlight it. <span class="hl">It's copied.</span></h1>
 		<p style="--d:300ms" class="rise mt-5 max-w-xl text-lg text-muted">
 			Snipy lives in your tray and copies any text you select, in every app. No more Ctrl+C.
@@ -15,4 +16,55 @@ import DownloadButton from './DownloadButton.astro';
 		</div>
 		<p style="--d:600ms" class="rise mt-4 text-sm text-muted">Windows only.</p>
 	</div>
+	<a href="#how" class="scroll-hint" aria-label="Scroll down"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg></a>
 </section>
+
+<script>
+	const svg = document.getElementById('snipy');
+	const eyes = document.getElementById('snipy-eyes');
+	const blinker = svg?.querySelector('.eyes-open');
+	if (svg && eyes && blinker && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+		let happyTimer: number;
+		let idleTimer: number;
+		const look = (x: number, y: number) => (eyes.style.transform = `translate(${x}px, ${y}px)`);
+		const resting = () => svg.classList.contains('happy') || svg.classList.contains('asleep');
+
+		const wake = () => {
+			svg.classList.remove('asleep');
+			clearTimeout(idleTimer);
+			idleTimer = setTimeout(() => {
+				if (svg.classList.contains('happy')) return wake();
+				svg.classList.add('asleep');
+				look(0, 0);
+			}, 5000);
+		};
+		wake();
+		for (const ev of ['pointermove', 'keydown', 'scroll', 'pointerdown']) addEventListener(ev, wake, { passive: true });
+
+		addEventListener('pointermove', (e) => {
+			if (resting()) return;
+			const r = svg.getBoundingClientRect();
+			const dx = (e.clientX - (r.left + r.width / 2)) / innerWidth;
+			const dy = (e.clientY - (r.top + r.height / 2)) / innerHeight;
+			look(Math.max(-1, Math.min(1, dx * 3)) * 14, Math.max(-1, Math.min(1, dy * 3)) * 18);
+		});
+
+		document.addEventListener('click', (e) => {
+			if (!(e.target as Element).closest('a[href*="releases/latest/download"]')) return;
+			svg.classList.remove('asleep');
+			svg.classList.add('happy');
+			look(0, 0);
+			clearTimeout(happyTimer);
+			happyTimer = setTimeout(() => svg.classList.remove('happy'), 3500);
+		});
+
+		const blink = () => {
+			if (!resting()) {
+				blinker.classList.add('blink');
+				setTimeout(() => blinker.classList.remove('blink'), 140);
+			}
+			setTimeout(blink, 1800 + Math.random() * 3500);
+		};
+		setTimeout(blink, 1500);
+	}
+</script>
